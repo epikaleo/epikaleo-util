@@ -1,7 +1,7 @@
 {
   "name": "@epikaleo/util",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Common utilities for Epikaleo, a replacement for Discord and TeamSpeak.",
   "main": "dist/index.js",
   "scripts": {

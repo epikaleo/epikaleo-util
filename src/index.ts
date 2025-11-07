@@ -44,6 +44,55 @@ export const EnvHelper = {
     }
     return value;
   },
+  regex(key: string, pattern: RegExp, defaultValue: string): string {
+    if (!pattern.test(defaultValue)) {
+      throw new Error(`env:${key} does not have a valid default value.`);
+    }
+    const value = process.env[key];
+    if (value === undefined) {
+      throw new Error(`env:${key} is required but not set.`);
+    }
+    if (!pattern.test(value)) {
+      throw new Error(`env:${key} does not match required pattern: ${pattern.toString()}`);
+    }
+    return value;
+  },
+  optional: {
+    string(key: string): string | null {
+      return process.env[key] ?? null;
+    },
+    int(key: string): number | null {
+      const value = process.env[key];
+      if (value === undefined) {
+        return null;
+      }
+      const intValue = parseInt(value, 10);
+      if (isNaN(intValue)) {
+        throw new Error(`env:${key} is not a valid integer value`);
+      }
+      return intValue;
+    },
+    enum(key: string, valid: string[]): string | null {
+      const value = process.env[key];
+      if (value === undefined) {
+        return null;
+      }
+      if (!valid.includes(value)) {
+        throw new Error(`env:${key} is not valid. Valid values are ${valid.join(', ')}`);
+      }
+      return value;
+    },
+    regex(key: string, pattern: RegExp): string | null {
+      const value = process.env[key];
+      if (value === undefined) {
+        return null;
+      }
+      if (!pattern.test(value)) {
+        throw new Error(`env:${key} does not match required pattern: ${pattern.toString()}`);
+      }
+      return value;
+    }
+  },
   required: {
     string(key: string): string {
       const value = process.env[key];
@@ -80,6 +129,16 @@ export const EnvHelper = {
       }
       if (!valid.includes(value)) {
         throw new Error(`env:${key} is not valid. Valid values are ${valid.join(', ')}`);
+      }
+      return value;
+    },
+    regex(key: string, pattern: RegExp): string {
+      const value = process.env[key];
+      if (value === undefined) {
+        throw new Error(`env:${key} is required but not set.`);
+      }
+      if (!pattern.test(value)) {
+        throw new Error(`env:${key} does not match required pattern: ${pattern.toString()}`);
       }
       return value;
     }
