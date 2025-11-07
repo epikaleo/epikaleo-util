@@ -13,6 +13,13 @@ export const EnvHelper = {
     const value = process.env[key];
     return value ?? defaultValue;
   },
+  stringArray(key: string, defaultValue: string[]): string[] {
+    const value = process.env[key];
+    if (value === undefined) {
+      return defaultValue;
+    }
+    return value.split(',');
+  },
   int(key: string, defaultValue: number): number {
     const value = process.env[key];
     if (value === undefined) {
