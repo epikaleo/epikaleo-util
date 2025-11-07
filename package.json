@@ -1,0 +1,20 @@
+{
+  "name": "@epikaleo/util",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Common utilities for Epikaleo, a replacement for Discord and TeamSpeak.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "typescript": "^5.5.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "@epikaleo:registry": "https://npm.pkg.github.com/"
+  }
+}
